@@ -74,9 +74,11 @@ body {
 
 .subheading {
   margin: 0 0 56px;
-  font-size: 56px;
+  font-size: 64px;
+  font-family: Brush Script MT;
   line-height: 80px;
   text-align: center;
+  color:#c5aa68;
 }
 
 .user-image {

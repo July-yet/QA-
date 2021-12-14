@@ -1,0 +1,18 @@
+1. http://89.223.126.182:8080/issue/CALC-11 -  error entering data through the interface;
+2. http://89.223.126.182:8080/issue/CALC-12 - error entering numbers from the keyboard;
+3. http://89.223.126.182:8080/issue/CALC-13 - Error entering numbers from the numeric keypad;
+4. http://89.223.126.182:8080/issue/CALC-14 - Entering letters from the keyboard;
+5. http://89.223.126.182:8080/issue/CALC-15 - Testing the change of the sign of the number 0$
+6. http://89.223.126.182:8080/issue/CALC-16 - Calculating the square root by copying-pasting a number;
+7. http://89.223.126.182:8080/issue/CALC-17 - Multiplying a number by 100%;
+8. http://89.223.126.182:8080/issue/CALC-18 - Multiplying a number by 0%;
+9. http://89.223.126.182:8080/issue/CALC-19 - Multiplication of two positive numbers;
+10.http://89.223.126.182:8080/issue/CALC-20 - Multiplying a positive number by 1;
+11.http://89.223.126.182:8080/issue/CALC-21 - Multiplication of positive and negative numbers;
+12.http://89.223.126.182:8080/issue/CALC-22 - Multiplication of negative numbers;
+13.http://89.223.126.182:8080/issue/CALC-23 - Multiplying a number by 0;
+14.http://89.223.126.182:8080/issue/CALC-24 - Resizing the application window;
+15.http://89.223.126.182:8080/issue/CALC-25 - Getting an infinite decimal fraction as a result of division;
+16.http://89.223.126.182:8080/issue/CALC-26 - No logarithm function button;
+17.http://89.223.126.182:8080/issue/CALC-27 - Spelling error in the error message - 1;
+18.http://89.223.126.182:8080/issue/CALC-28.

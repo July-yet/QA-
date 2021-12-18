@@ -15,4 +15,4 @@
 15.http://89.223.126.182:8080/issue/CALC-25 - Getting an infinite decimal fraction as a result of division;
 16.http://89.223.126.182:8080/issue/CALC-26 - No logarithm function button;
 17.http://89.223.126.182:8080/issue/CALC-27 - Spelling error in the error message - 1;
-18.http://89.223.126.182:8080/issue/CALC-28.
+18.http://89.223.126.182:8080/issue/CALC-28 - Spelling error in the error message - 2.

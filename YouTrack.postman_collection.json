@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "242c11a1-fac6-4fb6-a6c0-8e29086a8fa9",
+		"name": "YouTrack",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Createmeta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"  \r",
+							"pm.collectionVariables.set(\"PROJECT_ID\", jsonData[2].id);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://89.223.126.182:8080/api/admin/projects?fields=id,name,shortName",
+					"protocol": "http",
+					"host": [
+						"89",
+						"223",
+						"126",
+						"182"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"projects"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "id,name,shortName"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ISSUE",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.collectionVariables.set(\"SUMMARY\", \"MITINA\");\r",
+							"pm.collectionVariables.set(\"DESCRIPTION\", \"new_issue\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"   var jsonData = pm.response.json();\r",
+							"  \r",
+							"pm.collectionVariables.set(\"ID_ISSUE\",jsonData.id); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"project\": {\r\n        \"id\": \"{{PROJECT_ID}}\"\r\n    },\r\n    \"summary\": \"{{SUMMARY}}\",\r\n    \"description\": \"{{DESCRIPTION}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://89.223.126.182:8080/api/issues",
+					"protocol": "http",
+					"host": [
+						"89",
+						"223",
+						"126",
+						"182"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"issues"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ISSUE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"SUMMARY_&_DISCRIPTION_TESTS\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.summary).to.eql(\"MITINA\");\r",
+							"    pm.expect(jsonData.description).to.eql(\"new issue\");\r",
+							"});\r",
+							"   var jsonData = pm.response.json();\r",
+							"  \r",
+							"pm.collectionVariables.set(\"ID_FIELD_STATE\",jsonData.customFields[2].id); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://89.223.126.182:8080/api/issues/{{ID_ISSUE}}?fields=$type,id,summary,description,customFields($type,id,projectCustomField($type,id,field($type,id,name)),value($type,avatarUrl,buildLink,color(id),fullName,id,isResolved,localizedName,login,minutes,name,presentation,text))",
+					"protocol": "http",
+					"host": [
+						"89",
+						"223",
+						"126",
+						"182"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"issues",
+						"{{ID_ISSUE}}"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "$type,id,summary,description,customFields($type,id,projectCustomField($type,id,field($type,id,name)),value($type,avatarUrl,buildLink,color(id),fullName,id,isResolved,localizedName,login,minutes,name,presentation,text))"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TRANSITIONS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"  \r",
+							"pm.collectionVariables.set(\"TR_IN_PR\",jsonData.bundle.values[2].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://89.223.126.182:8080/api/admin/projects/{{PROJECT_ID}}/customFields/{{ID_FIELD_STATE}}?fields=bundle(values(id,name,$type),aggregatedUsers(id,name,$type))",
+					"protocol": "http",
+					"host": [
+						"89",
+						"223",
+						"126",
+						"182"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"projects",
+						"{{PROJECT_ID}}",
+						"customFields",
+						"{{ID_FIELD_STATE}}"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "bundle(values(id,name,$type),aggregatedUsers(id,name,$type))"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TRANSITIONS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customFields\": [\r\n        {\r\n            \"name\": \"State\",\r\n            \"$type\": \"StateIssueCustomField\",\r\n            \"value\": {\r\n                \"id\": \"{{TR_IN_PR}}\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://89.223.126.182:8080/api/issues/{{ID_ISSUE}}?fields=customFields(id,name,value(avatarUrl,buildLink,color(id),fullName,id,isResolved,localizedName,login,minutes,name,presentation,text))",
+					"protocol": "http",
+					"host": [
+						"89",
+						"223",
+						"126",
+						"182"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"issues",
+						"{{ID_ISSUE}}"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "customFields(id,name,value(avatarUrl,buildLink,color(id),fullName,id,isResolved,localizedName,login,minutes,name,presentation,text))"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ISSUE NEW STATE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"STATE_TESTS\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.customFields[2].value.name).to.eql(\"In Progress\");\r",
+							"    });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://89.223.126.182:8080/api/issues/{{ID_ISSUE}}?fields=$type,id,summary,description,customFields($type,id,projectCustomField($type,id,field($type,id,name)),value($type,avatarUrl,buildLink,color(id),fullName,id,isResolved,localizedName,login,minutes,name,presentation,text))",
+					"protocol": "http",
+					"host": [
+						"89",
+						"223",
+						"126",
+						"182"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"issues",
+						"{{ID_ISSUE}}"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "$type,id,summary,description,customFields($type,id,projectCustomField($type,id,field($type,id,name)),value($type,avatarUrl,buildLink,color(id),fullName,id,isResolved,localizedName,login,minutes,name,presentation,text))"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "perm:anUtbHktQG1haWwucnU=.NDctMQ==.PBR9KBJflf8hyLR9GugrTZGNBForfc",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ID",
+			"value": ""
+		},
+		{
+			"key": "URL_ISSUE",
+			"value": ""
+		},
+		{
+			"key": "ID_ISSUE",
+			"value": ""
+		},
+		{
+			"key": "ID_FIELD_STATE",
+			"value": ""
+		},
+		{
+			"key": "PROJECT_ID",
+			"value": ""
+		},
+		{
+			"key": "TR_IN_PR",
+			"value": ""
+		},
+		{
+			"key": "DESCRIPTION",
+			"value": ""
+		},
+		{
+			"key": "SUMMARY",
+			"value": ""
+		}
+	]
+}

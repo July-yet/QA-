@@ -22,8 +22,6 @@ public class FirstAttempts {
 
     private WebDriver driver;
     private String baseUrl;
-
-
     @Before
     public void setUp() throws Exception {
         System.setProperty("webdriver.chrome.driver", "src/test/chromedriver.exe");
@@ -35,113 +33,38 @@ public class FirstAttempts {
     }
 
     @Test
-    public void InvalidCardNumber() throws Exception {
+    public void InvalidValues() throws Exception {
         driver.get(baseUrl);
 
-        driver.findElement(By.id("input-card-number")).click();
-        driver.findElement(By.id("input-card-number")).clear();
+
         driver.findElement(By.id("input-card-number")).sendKeys("1222 3456 1234");
-        driver.findElement(By.id("input-card-holder")).click();
-        driver.findElement(By.id("input-card-holder")).clear();
-        driver.findElement(By.id("input-card-holder")).sendKeys("OLGA ULIANOVA");
-        driver.findElement(By.id("card-expires-month")).click();
-        new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("12");
-        driver.findElement(By.id("card-expires-year")).click();
-        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2021");
-        driver.findElement(By.id("input-card-cvc")).click();
-        driver.findElement(By.id("input-card-cvc")).clear();
-        driver.findElement(By.id("input-card-cvc")).sendKeys("777");
-        driver.findElement(By.id("action-submit")).click();
-        driver.findElement(By.id("success")).click();
-        driver.findElement(By.xpath("//div[@id='payment-item-status']/div[2]")).click();
-    }
-
-
-    @Test
-    public void InvalidCardHolder() throws Exception {
-        driver.get(baseUrl);
-
-        driver.findElement(By.id("input-card-number")).click();
-        driver.findElement(By.id("input-card-number")).clear();
-        driver.findElement(By.id("input-card-number")).sendKeys("4000 0000 0000 0002");
-        driver.findElement(By.id("input-card-holder")).click();
-        driver.findElement(By.id("input-card-holder")).clear();
         driver.findElement(By.id("input-card-holder")).sendKeys("12345");
-        driver.findElement(By.id("card-expires-month")).click();
-        new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("12");
+        new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("02");
         driver.findElement(By.id("card-expires-year")).click();
-        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2021");
-        driver.findElement(By.id("input-card-cvc")).click();
-        driver.findElement(By.id("input-card-cvc")).clear();
-        driver.findElement(By.id("input-card-cvc")).sendKeys("777");
-        driver.findElement(By.id("action-submit")).click();
-        driver.findElement(By.id("success")).click();
-        driver.findElement(By.xpath("//div[@id='payment-item-status']/div[2]")).click();
-
-    }
-
-    @Test
-    public void InvalidData() throws Exception {
-        driver.get(baseUrl);
-
-        driver.findElement(By.id("input-card-number")).click();
-        driver.findElement(By.id("input-card-number")).clear();
-        driver.findElement(By.id("input-card-number")).sendKeys("4000 0000 0000 0002");
-        driver.findElement(By.id("input-card-holder")).click();
-        driver.findElement(By.id("input-card-holder")).clear();
-        driver.findElement(By.id("input-card-holder")).sendKeys("OLGA ULIANOVA");
-        driver.findElement(By.id("card-expires-month")).click();
-        new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("07");
-        driver.findElement(By.id("card-expires-year")).click();
-        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2021");
-        driver.findElement(By.id("input-card-cvc")).click();
-        driver.findElement(By.id("input-card-cvc")).clear();
-        driver.findElement(By.id("input-card-cvc")).sendKeys("777");
-        driver.findElement(By.id("action-submit")).click();
-        driver.findElement(By.id("success")).click();
-        driver.findElement(By.xpath("//div[@id='payment-item-status']/div[2]")).click();
-
-    }
-
-    @Test
-    public void InvalidCVC() throws Exception {
-        driver.get(baseUrl);
-
-        driver.findElement(By.id("input-card-number")).click();
-        driver.findElement(By.id("input-card-number")).clear();
-        driver.findElement(By.id("input-card-number")).sendKeys("4000 0000 0000 0002");
-        driver.findElement(By.id("input-card-holder")).click();
-        driver.findElement(By.id("input-card-holder")).clear();
-        driver.findElement(By.id("input-card-holder")).sendKeys("OLGA ULIANOVA");
-        driver.findElement(By.id("card-expires-month")).click();
-        new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("12");
-        driver.findElement(By.id("card-expires-year")).click();
-        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2021");
-        driver.findElement(By.id("input-card-cvc")).click();
-        driver.findElement(By.id("input-card-cvc")).clear();
+        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2022");
         driver.findElement(By.id("input-card-cvc")).sendKeys("gta");
         driver.findElement(By.id("action-submit")).click();
-        driver.findElement(By.id("success")).click();
-        driver.findElement(By.xpath("//div[@id='payment-item-status']/div[2]")).click();
 
+
+        Assert.assertEquals("Card number is not valid", driver.findElement(By.xpath("//*[@id=\"card-number-field\"]/div/label"))
+                .getText());
+        Assert.assertEquals("Cardholder name is not valid", driver.findElement(By.xpath("//*[@id=\"card-holder-field\"]/div/label"))
+                .getText());
+        Assert.assertEquals("CVV2/CVC2/CAV2 is required", driver.findElement(By.xpath("//*[@id=\"card-cvc-field\"]/div/label"))
+                .getText());
     }
+
 
     @Test
     public void ValidValues() throws Exception {
         driver.get(baseUrl);
-
-        driver.findElement(By.id("input-card-number")).click();
-        driver.findElement(By.id("input-card-number")).clear();
+        
         driver.findElement(By.id("input-card-number")).sendKeys("4000 0000 0000 0002");
-        driver.findElement(By.id("input-card-holder")).click();
-        driver.findElement(By.id("input-card-holder")).clear();
         driver.findElement(By.id("input-card-holder")).sendKeys("OLGA ULIANOVA");
         driver.findElement(By.id("card-expires-month")).click();
-        new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("12");
+        new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("02");
         driver.findElement(By.id("card-expires-year")).click();
-        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2021");
-        driver.findElement(By.id("input-card-cvc")).click();
-        driver.findElement(By.id("input-card-cvc")).clear();
+        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2022");
         driver.findElement(By.id("input-card-cvc")).sendKeys("777");
         driver.findElement(By.id("action-submit")).click();
         driver.findElement(By.id("success")).click();
@@ -157,18 +80,10 @@ public class FirstAttempts {
         String CardHolder = "OLGA ULIANOVA";
         String ConfirmedStatus = "Confirmed";
 
-        driver.findElement(By.id("input-card-number")).click();
-        driver.findElement(By.id("input-card-number")).clear();
         driver.findElement(By.id("input-card-number")).sendKeys("4000 0000 0000 0002");
-        driver.findElement(By.id("input-card-holder")).click();
-        driver.findElement(By.id("input-card-holder")).clear();
         driver.findElement(By.id("input-card-holder")).sendKeys(CardHolder);
-        driver.findElement(By.id("card-expires-month")).click();
-        new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("12");
-        driver.findElement(By.id("card-expires-year")).click();
-        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2021");
-        driver.findElement(By.id("input-card-cvc")).click();
-        driver.findElement(By.id("input-card-cvc")).clear();
+        new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("03");
+        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2023");
         driver.findElement(By.id("input-card-cvc")).sendKeys("777");
         driver.findElement(By.id("action-submit")).click();
         driver.findElement(By.id("success")).click();
@@ -186,18 +101,10 @@ public class FirstAttempts {
         String CardHolder = "OLGA ULIANOVA";
         String ConfirmedStatus = "Declined by issuing bank";
 
-        driver.findElement(By.id("input-card-number")).click();
-        driver.findElement(By.id("input-card-number")).clear();
         driver.findElement(By.id("input-card-number")).sendKeys("5555555555554444");
-        driver.findElement(By.id("input-card-holder")).click();
-        driver.findElement(By.id("input-card-holder")).clear();
         driver.findElement(By.id("input-card-holder")).sendKeys(CardHolder);
-        driver.findElement(By.id("card-expires-month")).click();
-        new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("12");
-        driver.findElement(By.id("card-expires-year")).click();
-        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2021");
-        driver.findElement(By.id("input-card-cvc")).click();
-        driver.findElement(By.id("input-card-cvc")).clear();
+        new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("02");
+        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2023");
         driver.findElement(By.id("input-card-cvc")).sendKeys("777");
         driver.findElement(By.id("action-submit")).click();
         driver.findElement(By.id("success")).click();
@@ -211,18 +118,11 @@ public class FirstAttempts {
 
         driver.get(baseUrl);
 
-        driver.findElement(By.id("input-card-number")).click();
-        driver.findElement(By.id("input-card-number")).clear();
+
         driver.findElement(By.id("input-card-number")).sendKeys("4000 0000 0000 0002");
-        driver.findElement(By.id("input-card-holder")).click();
-        driver.findElement(By.id("input-card-holder")).clear();
         driver.findElement(By.id("input-card-holder")).sendKeys("OLGA ULIANOVA");
-        driver.findElement(By.id("card-expires-month")).click();
         new Select(driver.findElement(By.id("card-expires-month"))).selectByVisibleText("12");
-        driver.findElement(By.id("card-expires-year")).click();
-        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2021");
-        driver.findElement(By.id("input-card-cvc")).click();
-        driver.findElement(By.id("input-card-cvc")).clear();
+        new Select(driver.findElement(By.id("card-expires-year"))).selectByVisibleText("2022");
         driver.findElement(By.id("input-card-cvc")).sendKeys("777");
 
         try {
